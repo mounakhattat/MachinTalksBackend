@@ -1,0 +1,5 @@
+package TestApplication.MachinesTalk.enumerations;
+
+public enum TypeTest {
+    LOGARITHMIC_LOAD_MODEL, EXPONENTIEL_LOAD_MODEL, SPIKE_LOAD_MODEL,CONSTANT_LOAD_MODEL, SOAK_MODEL,STRESS_LOAD_MODEL
+}
