@@ -7,6 +7,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -24,8 +25,8 @@ public class Scenario implements Serializable {
     private Long eapsedTime;
     private Date duration;
     private Integer tryMax;
-    @JsonIgnore
-    @ManyToOne(cascade = CascadeType.ALL)
+    private List<Integer> usersNumber;
+    @ManyToOne(cascade = CascadeType.MERGE)
     private Paths path;
     @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL)

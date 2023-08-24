@@ -1,11 +1,14 @@
 package com.machinestalk.controllers;
 
+import com.machinestalk.entities.Setup;
+import com.machinestalk.entities.SetupDTO;
 import com.machinestalk.geenerateclass.ClassGenerated;
 import com.machinestalk.entities.Application;
 import com.machinestalk.services.ApplicationServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URLDecoder;
 import java.util.List;
 
 @RestController
@@ -31,7 +34,6 @@ public class ApplicationController {
     @PostMapping()
     public Application save(@RequestBody Application application) {
         return servicesss.save(application);
-
     }
 
     @PutMapping()
@@ -44,10 +46,10 @@ public class ApplicationController {
         servicesss.delete(idTestApp);
     }
 
-   @GetMapping("/Genaration")
-    public void Generation() {
-        try {
-            ClassGenerated.testing();
+   @PostMapping("/Genaration")
+    public void Generation(@RequestBody SetupDTO setup) {
+       try {
+           ClassGenerated.testing( setup);;
         } catch (Throwable t) {
             t.printStackTrace();
         }
