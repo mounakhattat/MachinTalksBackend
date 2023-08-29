@@ -1,14 +1,12 @@
 package com.machinestalk.controllers;
 
-import com.machinestalk.entities.Setup;
-import com.machinestalk.entities.SetupDTO;
+import com.machinestalk.models.SetupDTO;
 import com.machinestalk.geenerateclass.ClassGenerated;
 import com.machinestalk.entities.Application;
 import com.machinestalk.services.ApplicationServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URLDecoder;
 import java.util.List;
 
 @RestController
@@ -17,6 +15,8 @@ import java.util.List;
 public class ApplicationController {
     @Autowired
     ApplicationServiceImpl servicesss;
+    @Autowired
+    ClassGenerated classGenerated;
 
     //http://localhost:8085/TestApp/display-TestApp
     @GetMapping()
@@ -49,7 +49,7 @@ public class ApplicationController {
    @PostMapping("/Genaration")
     public void Generation(@RequestBody SetupDTO setup) {
        try {
-           ClassGenerated.testing( setup);;
+           classGenerated.testing(setup);
         } catch (Throwable t) {
             t.printStackTrace();
         }

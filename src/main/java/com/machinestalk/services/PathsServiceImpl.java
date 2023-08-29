@@ -16,9 +16,9 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class PathsServiceImpl implements PathsService {
-    @Autowired
+
     PathsRepository pathsRepository;
-    @Autowired
+
     ApplicationRepository applicationRepository;
 
     @Override

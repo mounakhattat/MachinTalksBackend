@@ -8,6 +8,5 @@ public class Main {
     public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
            GatlingPropertiesBuilder var1 = new GatlingPropertiesBuilder();
         var1.simulationClass("com.machinestalk.geenerateclass.MachinesTalk");
-        Gatling.fromMap(var1.build());
-    }
+        Gatling.fromMap(var1.build());}
 }

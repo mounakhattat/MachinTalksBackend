@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class SetupServiceImpl implements SetupService {
-    @Autowired
+
     SetupRepository setupRepository ;
     @Override
     public List<Setup> findAll() {
