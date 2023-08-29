@@ -15,9 +15,9 @@ import java.util.Set;
 @Service
 @AllArgsConstructor
 public class ParametersServiceImpl implements ParametersService{
-    @Autowired
+
     ParametersRepositoty parametersRepositoty;
-    @Autowired
+
     PathsRepository pathsRepository;
     @Override
     public List<Parameters> findAll() {

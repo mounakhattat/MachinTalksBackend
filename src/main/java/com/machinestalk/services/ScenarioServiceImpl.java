@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class ScenarioServiceImpl  implements ScenarioService {
-    @Autowired
+
     ScenarioRepository scenarioRepository ;
     @Override
     public List<Scenario> findAll() {

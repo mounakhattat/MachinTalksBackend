@@ -1,20 +1,30 @@
 package com.machinestalk.geenerateclass;
 import com.machinestalk.entities.Application;
 import com.machinestalk.entities.Scenario;
-import com.machinestalk.entities.SetupDTO;
+import com.machinestalk.enumerations.TypeTest;
+import com.machinestalk.models.InformationTestType;
+import com.machinestalk.models.SetupDTO;
+import com.machinestalk.services.GenerationServiceImpl;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Paths;
+@Service
+public class ClassGenerated {
+    @Autowired
 
-public class ClassGenerated  {
+    GenerationServiceImpl generationService;
     public static void main(String[] args) throws Exception {
-        //  Class.forName("com.machinestalk.geenerateclass.MachinesTalk").newInstance();
     }
-    public static void testing(SetupDTO setupDTO) throws Exception {
+
+
+    public  void testing(SetupDTO setupDTO) throws Exception {
         //Request Variable
         Scenario scenario = setupDTO.getScenarios().get(0);
         com.machinestalk.entities.Paths path = scenario.getPath();
@@ -49,13 +59,6 @@ public class ClassGenerated  {
             constructorVisitor.visitLdcInsn("mqtt");
             constructorVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "io/gatling/javaapi/mqtt/MqttDsl", "mqtt", "(Ljava/lang/String;)Lio/gatling/javaapi/mqtt/Mqtt;", false);
         }
-          /*
-            constructorVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "io/gatling/javaapi/http/HttpDsl", "status", "()Lio/gatling/javaapi/core/Check;", false);
-            constructorVisitor.visitLdcInsn( 200); // Load the expected status code (200)
-            constructorVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "io.gatling.javaapi.core$Check", "is", "(I)Lio/gatling/javaapi/core$Check", false);
-            // Call the .check
-            constructorVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "io/gatling/javaapi/http/HttpRequestBuilder", "check", "(Lio/gatling/javaapi/core/CheckBuilder$Check;)Lio/gatling/javaapi/http/HttpRequestBuilder;", false);
-*/
         constructorVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "io/gatling/javaapi/core/ScenarioBuilder", "exec", "(Lio/gatling/javaapi/core/ActionBuilder;)Lio/gatling/javaapi/core/StructureBuilder;", false);
         constructorVisitor.visitTypeInsn(Opcodes.CHECKCAST, "io/gatling/javaapi/core/ScenarioBuilder");
         constructorVisitor.visitVarInsn(Opcodes.ASTORE, 2); // Assuming you have 2 local variables before this
@@ -67,17 +70,8 @@ public class ClassGenerated  {
         constructorVisitor.visitInsn(Opcodes.ICONST_0); // Array index
 //**
         constructorVisitor.visitVarInsn(Opcodes.ALOAD, 2);
-        constructorVisitor.visitInsn(Opcodes.ICONST_1);
-        constructorVisitor.visitTypeInsn(Opcodes.ANEWARRAY, "io/gatling/javaapi/core/ClosedInjectionStep");
-        constructorVisitor.visitInsn(Opcodes.DUP);
-        constructorVisitor.visitInsn(Opcodes.ICONST_0);
-        constructorVisitor.visitIntInsn(Opcodes.BIPUSH, 24);
-        constructorVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "io/gatling/javaapi/core/CoreDsl", "constantConcurrentUsers", "(I)Lio/gatling/javaapi/core/ClosedInjectionStep$Constant;", false);
-        constructorVisitor.visitLdcInsn(setupDTO.getDurings().get(0));
-        constructorVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "java/time/Duration", "ofSeconds", "(J)Ljava/time/Duration;", false);
-        constructorVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "io/gatling/javaapi/core/ClosedInjectionStep$Constant", "during", "(Ljava/time/Duration;)Lio/gatling/javaapi/core/ClosedInjectionStep;", false);
-        constructorVisitor.visitInsn(Opcodes.AASTORE);
-        constructorVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "io/gatling/javaapi/core/ScenarioBuilder", "injectClosed", "([Lio/gatling/javaapi/core/ClosedInjectionStep;)Lio/gatling/javaapi/core/PopulationBuilder;", false);
+
+        generationService.DefineFunctionWithTypeTestChoising(scenario.getTypeTest(),constructorVisitor,setupDTO);
         constructorVisitor.visitInsn(Opcodes.ICONST_1);
         constructorVisitor.visitTypeInsn(Opcodes.ANEWARRAY, "io/gatling/javaapi/core/ProtocolBuilder");
         constructorVisitor.visitInsn(Opcodes.DUP);
@@ -101,9 +95,9 @@ public class ClassGenerated  {
         saveToFileInTargetDirectory("C:\\Users\\Mouna\\Desktop\\backavecscenario\\MachinesTalkApi\\target\\classes\\com\\machinestalk\\geenerateclass", "MachinesTalk.class", classBytes);
         /// Define a custom class loader
     }
+
     private static void saveToFileInTargetDirectory(String targetDirectory, String fileName, byte[] content) throws IOException {
         File targetDir = new File(targetDirectory);
-
         if (!targetDir.exists()) {
             boolean created = targetDir.mkdirs();
             if (!created) {
@@ -111,9 +105,9 @@ public class ClassGenerated  {
             }
         }
         String filePath = Paths.get(targetDirectory, fileName).toString();
-
         try (FileOutputStream fos = new FileOutputStream(filePath)) {
             fos.write(content);
         }
     }
+
 }

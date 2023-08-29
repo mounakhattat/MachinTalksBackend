@@ -12,7 +12,6 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class ApplicationServiceImpl implements ApplicationService {
-@Autowired
 ApplicationRepository applicationRepository ;
     @Override
     public List<Application> findAll() {
