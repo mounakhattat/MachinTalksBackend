@@ -3,6 +3,7 @@ import com.machinestalk.entities.Application;
 import com.machinestalk.entities.Scenario;
 import com.machinestalk.enumerations.TypeTest;
 import com.machinestalk.models.InformationTestType;
+import com.machinestalk.models.ScenarioDTO;
 import com.machinestalk.models.SetupDTO;
 import com.machinestalk.services.GenerationServiceImpl;
 import org.objectweb.asm.ClassWriter;
@@ -15,6 +16,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Paths;
+
+import static com.machinestalk.enumerations.TypeTest.getValueByName;
+
 @Service
 public class ClassGenerated {
     @Autowired
@@ -26,7 +30,7 @@ public class ClassGenerated {
 
     public  void testing(SetupDTO setupDTO) throws Exception {
         //Request Variable
-        Scenario scenario = setupDTO.getScenarios().get(0);
+        ScenarioDTO scenario = setupDTO.getScenarios().get(0);
         com.machinestalk.entities.Paths path = scenario.getPath();
         Application app = path.getApplication();
         ClassWriter classWriter = new ClassWriter(ClassWriter.COMPUTE_FRAMES);
@@ -46,11 +50,16 @@ public class ClassGenerated {
         constructorVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "io/gatling/javaapi/http/HttpProtocolBuilder", "acceptHeader", "(Ljava/lang/String;)Lio/gatling/javaapi/http/HttpProtocolBuilder;", false);
         constructorVisitor.visitLdcInsn("Gatling/PerformanceTest");
         constructorVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "io/gatling/javaapi/http/HttpProtocolBuilder", "userAgentHeader", "(Ljava/lang/String;)Lio/gatling/javaapi/http/HttpProtocolBuilder;", false);
+        constructorVisitor.visitLdcInsn("Authorization");
+
+        constructorVisitor.visitLdcInsn("Bearer "+setupDTO.getTokenValue());
+        constructorVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "io/gatling/javaapi/http/HttpProtocolBuilder", "header", "(Ljava/lang/CharSequence;Ljava/lang/String;)Lio/gatling/javaapi/http/HttpProtocolBuilder;", false);
         constructorVisitor.visitVarInsn(Opcodes.ASTORE, 1);
         // For scenario
         constructorVisitor.visitLdcInsn(setupDTO.getName());
         constructorVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "io/gatling/javaapi/core/CoreDsl", "scenario", "(Ljava/lang/String;)Lio/gatling/javaapi/core/ScenarioBuilder;", false);
         if ("http".equals(app.getProtocol())) {
+
             constructorVisitor.visitLdcInsn(scenario.getName());
             constructorVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "io/gatling/javaapi/http/HttpDsl", "http", "(Ljava/lang/String;)Lio/gatling/javaapi/http/Http;", false);
             constructorVisitor.visitLdcInsn(path.getPath());
@@ -70,8 +79,34 @@ public class ClassGenerated {
         constructorVisitor.visitInsn(Opcodes.ICONST_0); // Array index
 //**
         constructorVisitor.visitVarInsn(Opcodes.ALOAD, 2);
+        System.out.println("++++Capacity ++ ++" +"CAPACITY_TEST".equals(scenario.getTypeTest().toString()));
+        if( "CAPACITY_TEST".equals(scenario.getTypeTest().toString()) || "SOAK_LOAD_TEST".equals(scenario.getTypeTest().toString())) {
+            constructorVisitor.visitInsn(getValueByName(scenario.getTypeTest().toString()));
+            constructorVisitor.visitTypeInsn(Opcodes.ANEWARRAY, "io/gatling/javaapi/core/ClosedInjectionStep");
+            constructorVisitor.visitInsn(Opcodes.DUP);
+            generationService.DefineFunctionWithTypeTestChoising(scenario.getTypeTest(),constructorVisitor,setupDTO);
+        }else if( "Step_Load_Model".equals(scenario.getTypeTest().toString()) ) {
+            constructorVisitor.visitIntInsn(Opcodes.BIPUSH, 7);
+            constructorVisitor.visitTypeInsn(Opcodes.ANEWARRAY, "io/gatling/javaapi/core/OpenInjectionStep");
+            constructorVisitor.visitInsn(Opcodes.DUP);
+            generationService.DefineFunctionWithTypeTestChoising(scenario.getTypeTest(),constructorVisitor,setupDTO);
+        }
+  /*      else if( "CUSTOMIZED".equals(scenario.getTypeTest().toString()) ) {
+            constructorVisitor.visitInsn(Opcodes.ICONST_2);
+            constructorVisitor.visitTypeInsn(Opcodes.ANEWARRAY, "io/gatling/javaapi/core/OpenInjectionStep");
+            constructorVisitor.visitInsn(Opcodes.DUP);
+            System.out.println("I'm in Customise ^^ ");
+            generationService.DefineFunctionWithTypeTestChoising(scenario.getTypeTest(),constructorVisitor,setupDTO);
+        }
 
-        generationService.DefineFunctionWithTypeTestChoising(scenario.getTypeTest(),constructorVisitor,setupDTO);
+   */
+        else{
+            constructorVisitor.visitInsn(getValueByName(scenario.getTypeTest().toString()));
+            constructorVisitor.visitTypeInsn(Opcodes.ANEWARRAY, "io/gatling/javaapi/core/OpenInjectionStep");
+            constructorVisitor.visitInsn(Opcodes.DUP);
+            generationService.DefineFunctionWithTypeTestChoising(scenario.getTypeTest(),constructorVisitor,setupDTO);
+
+        }
         constructorVisitor.visitInsn(Opcodes.ICONST_1);
         constructorVisitor.visitTypeInsn(Opcodes.ANEWARRAY, "io/gatling/javaapi/core/ProtocolBuilder");
         constructorVisitor.visitInsn(Opcodes.DUP);
