@@ -19,13 +19,13 @@ public class Scenario implements Serializable {
     @Enumerated(EnumType.STRING)
     private TypeTest typeTest;
     private String scenario;
-    private String erreurMsg ;
+    private String erreurMsg;
     private Boolean success;
     private Date pauseTime ;
     private Long eapsedTime;
     private Date duration;
     private Integer tryMax;
-    private List<Integer> usersNumber;
+//  private List<Integer> usersNumber;
     @ManyToOne(cascade = CascadeType.MERGE)
     private Paths path;
     @JsonIgnore
