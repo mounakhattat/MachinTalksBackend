@@ -1,9 +1,14 @@
 package com.machinestalk.controllers;
 
+import com.machinestalk.geenerateclass.GenerateRapport;
 import com.machinestalk.models.SetupDTO;
 import com.machinestalk.geenerateclass.ClassGenerated;
 import com.machinestalk.entities.Application;
 import com.machinestalk.services.ApplicationServiceImpl;
+import com.machinestalk.services.GenerationServiceImpl;
+import io.gatling.app.Gatling;
+import io.gatling.core.config.GatlingPropertiesBuilder;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +22,11 @@ public class ApplicationController {
     ApplicationServiceImpl servicesss;
     @Autowired
     ClassGenerated classGenerated;
+    @Autowired
+    GenerationServiceImpl generationService;
+@Autowired
+    GenerateRapport generateRapport;
+
 
     //http://localhost:8085/TestApp/display-TestApp
     @GetMapping()
@@ -54,4 +64,11 @@ public class ApplicationController {
             t.printStackTrace();
         }
     }
+    @GetMapping("/rapport")
+        public String Rapport (){
+        generateRapport.Rapport();
+     String obj= generationService.URPpath();
+        return obj;
+    }
+
 }

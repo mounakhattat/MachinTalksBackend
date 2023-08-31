@@ -16,6 +16,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.Comparator;
 
 import static com.machinestalk.enumerations.TypeTest.getValueByName;
 
@@ -85,26 +87,34 @@ public class ClassGenerated {
             constructorVisitor.visitTypeInsn(Opcodes.ANEWARRAY, "io/gatling/javaapi/core/ClosedInjectionStep");
             constructorVisitor.visitInsn(Opcodes.DUP);
             generationService.DefineFunctionWithTypeTestChoising(scenario.getTypeTest(),constructorVisitor,setupDTO);
+            constructorVisitor.visitInsn(Opcodes.AASTORE);
+            constructorVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "io/gatling/javaapi/core/ScenarioBuilder", "injectClosed", "([Lio/gatling/javaapi/core/ClosedInjectionStep;)Lio/gatling/javaapi/core/PopulationBuilder;", false);
+
         }else if( "Step_Load_Model".equals(scenario.getTypeTest().toString()) ) {
             constructorVisitor.visitIntInsn(Opcodes.BIPUSH, 7);
             constructorVisitor.visitTypeInsn(Opcodes.ANEWARRAY, "io/gatling/javaapi/core/OpenInjectionStep");
             constructorVisitor.visitInsn(Opcodes.DUP);
             generationService.DefineFunctionWithTypeTestChoising(scenario.getTypeTest(),constructorVisitor,setupDTO);
+            constructorVisitor.visitInsn(Opcodes.AASTORE);
+            constructorVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "io/gatling/javaapi/core/ScenarioBuilder", "injectOpen", "([Lio/gatling/javaapi/core/OpenInjectionStep;)Lio/gatling/javaapi/core/PopulationBuilder;", false);
+
         }
-  /*      else if( "CUSTOMIZED".equals(scenario.getTypeTest().toString()) ) {
+       else if( "CUSTOMIZED".equals(scenario.getTypeTest().toString()) ) {
             constructorVisitor.visitInsn(Opcodes.ICONST_2);
             constructorVisitor.visitTypeInsn(Opcodes.ANEWARRAY, "io/gatling/javaapi/core/OpenInjectionStep");
             constructorVisitor.visitInsn(Opcodes.DUP);
             System.out.println("I'm in Customise ^^ ");
             generationService.DefineFunctionWithTypeTestChoising(scenario.getTypeTest(),constructorVisitor,setupDTO);
+            constructorVisitor.visitInsn(Opcodes.AASTORE);
+            constructorVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "io/gatling/javaapi/core/ScenarioBuilder", "injectOpen", "([Lio/gatling/javaapi/core/OpenInjectionStep;)Lio/gatling/javaapi/core/PopulationBuilder;", false);
         }
-
-   */
         else{
             constructorVisitor.visitInsn(getValueByName(scenario.getTypeTest().toString()));
             constructorVisitor.visitTypeInsn(Opcodes.ANEWARRAY, "io/gatling/javaapi/core/OpenInjectionStep");
             constructorVisitor.visitInsn(Opcodes.DUP);
             generationService.DefineFunctionWithTypeTestChoising(scenario.getTypeTest(),constructorVisitor,setupDTO);
+            constructorVisitor.visitInsn(Opcodes.AASTORE);
+            constructorVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "io/gatling/javaapi/core/ScenarioBuilder", "injectOpen", "([Lio/gatling/javaapi/core/OpenInjectionStep;)Lio/gatling/javaapi/core/PopulationBuilder;", false);
 
         }
         constructorVisitor.visitInsn(Opcodes.ICONST_1);
@@ -129,6 +139,7 @@ public class ClassGenerated {
         //Save the bytecode as a .class file
         saveToFileInTargetDirectory("C:\\Users\\Mouna\\Desktop\\backavecscenario\\MachinesTalkApi\\target\\classes\\com\\machinestalk\\geenerateclass", "MachinesTalk.class", classBytes);
         /// Define a custom class loader
+
     }
 
     private static void saveToFileInTargetDirectory(String targetDirectory, String fileName, byte[] content) throws IOException {

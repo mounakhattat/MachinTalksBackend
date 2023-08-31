@@ -10,5 +10,6 @@ public interface GenerationService {
 
 
      void DefineFunctionWithTypeTestChoising(TypeTest typeTest, MethodVisitor methodVisitor, SetupDTO setupDTO) ;
+     String URPpath();
 
 }

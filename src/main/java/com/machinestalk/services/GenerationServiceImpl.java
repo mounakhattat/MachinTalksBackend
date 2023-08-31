@@ -8,6 +8,12 @@ import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
@@ -29,8 +35,6 @@ public class GenerationServiceImpl implements GenerationService {
                 methodVisitor.visitLdcInsn(longValue);
                 methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "java/time/Duration", "ofSeconds", "(J)Ljava/time/Duration;", false);
                 methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "io/gatling/javaapi/core/ClosedInjectionStep$RampTo", "during", "(Ljava/time/Duration;)Lio/gatling/javaapi/core/ClosedInjectionStep;", false);
-                methodVisitor.visitInsn(Opcodes.AASTORE);
-                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "io/gatling/javaapi/core/ScenarioBuilder", "injectClosed", "([Lio/gatling/javaapi/core/ClosedInjectionStep;)Lio/gatling/javaapi/core/PopulationBuilder;", false);
                 break;
             case SOAK_LOAD_TEST:
                 methodVisitor.visitInsn(Opcodes.ICONST_0);
@@ -40,21 +44,16 @@ public class GenerationServiceImpl implements GenerationService {
                 methodVisitor.visitLdcInsn(longValue1);
                 methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "java/time/Duration", "ofSeconds", "(J)Ljava/time/Duration;", false);
                 methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "io/gatling/javaapi/core/ClosedInjectionStep$Constant", "during", "(Ljava/time/Duration;)Lio/gatling/javaapi/core/ClosedInjectionStep;", false);
-                methodVisitor.visitInsn(Opcodes.AASTORE);
-                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "io/gatling/javaapi/core/ScenarioBuilder", "injectClosed", "([Lio/gatling/javaapi/core/ClosedInjectionStep;)Lio/gatling/javaapi/core/PopulationBuilder;", false);
-                break;
+                 break;
 //============================Open
             case STRESS_LOAD_TEST:
-
                 methodVisitor.visitInsn(Opcodes.ICONST_0);
                 methodVisitor.visitLdcInsn(setupDTO.getValueSaisie().get(0));
                 methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "io/gatling/javaapi/core/CoreDsl", "stressPeakUsers", "(I)Lio/gatling/javaapi/core/OpenInjectionStep$StressPeak;", false);
                 methodVisitor.visitLdcInsn(Long.valueOf(setupDTO.getValueSaisie().get(1)));
                 methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "java/time/Duration", "ofSeconds", "(J)Ljava/time/Duration;", false);
                 methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "io/gatling/javaapi/core/OpenInjectionStep$StressPeak", "during", "(Ljava/time/Duration;)Lio/gatling/javaapi/core/OpenInjectionStep;", false);
-                methodVisitor.visitInsn(Opcodes.AASTORE);
-                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "io/gatling/javaapi/core/ScenarioBuilder", "injectOpen", "([Lio/gatling/javaapi/core/OpenInjectionStep;)Lio/gatling/javaapi/core/PopulationBuilder;", false);
-                break;
+               break;
             case RAMP_LOAD_TEST:
                 methodVisitor.visitInsn(Opcodes.ICONST_0);
                 Double doubleValue = Double.valueOf(setupDTO.getValueSaisie().get(0));
@@ -67,20 +66,15 @@ public class GenerationServiceImpl implements GenerationService {
                 methodVisitor.visitLdcInsn(longValue3);
                 methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "java/time/Duration", "ofSeconds", "(J)Ljava/time/Duration;", false);
                 methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "io/gatling/javaapi/core/OpenInjectionStep$RampRate$During", "during", "(Ljava/time/Duration;)Lio/gatling/javaapi/core/OpenInjectionStep$RampRate$RampRateOpenInjectionStep;", false);
-                methodVisitor.visitInsn(Opcodes.AASTORE);
-                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "io/gatling/javaapi/core/ScenarioBuilder", "injectOpen", "([Lio/gatling/javaapi/core/OpenInjectionStep;)Lio/gatling/javaapi/core/PopulationBuilder;", false);
                 break;
             case BURST_TEST:
 
                 methodVisitor.visitInsn(Opcodes.ICONST_0);
                 methodVisitor.visitLdcInsn(setupDTO.getValueSaisie().get(0));
                 methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "io/gatling/javaapi/core/CoreDsl", "atOnceUsers", "(I)Lio/gatling/javaapi/core/OpenInjectionStep;", false);
-                methodVisitor.visitInsn(Opcodes.AASTORE);
-                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "io/gatling/javaapi/core/ScenarioBuilder", "injectOpen", "([Lio/gatling/javaapi/core/OpenInjectionStep;)Lio/gatling/javaapi/core/PopulationBuilder;", false);
-                break;
+               break;
             //************
             case CONSTANT_LOAD_TEST:
-                //  methodVisitor.visitInsn(Opcodes.ICONST_1);
                 methodVisitor.visitInsn(Opcodes.ICONST_0);
                 Double doubleValue4 = Double.valueOf(setupDTO.getValueSaisie().get(0));
                 methodVisitor.visitLdcInsn(doubleValue4);
@@ -89,12 +83,8 @@ public class GenerationServiceImpl implements GenerationService {
                 methodVisitor.visitLdcInsn(longValue4);
                 methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "java/time/Duration", "ofSeconds", "(J)Ljava/time/Duration;", false);
                 methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "io/gatling/javaapi/core/OpenInjectionStep$ConstantRate", "during", "(Ljava/time/Duration;)Lio/gatling/javaapi/core/OpenInjectionStep$ConstantRate$ConstantRateOpenInjectionStep;", false);
-                methodVisitor.visitInsn(Opcodes.AASTORE);
-                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "io/gatling/javaapi/core/ScenarioBuilder", "injectOpen", "([Lio/gatling/javaapi/core/OpenInjectionStep;)Lio/gatling/javaapi/core/PopulationBuilder;", false);
-                break;
-            case   Exponential_Load_Test:
-
-
+                 break;
+            case Exponential_Load_Test:
                 methodVisitor.visitInsn(Opcodes.ICONST_0);
                 Long longValue5 = Long.valueOf(setupDTO.getValueSaisie().get(0));
                 methodVisitor.visitLdcInsn(longValue5);
@@ -120,12 +110,10 @@ public class GenerationServiceImpl implements GenerationService {
                 Long longVal = Long.valueOf(setupDTO.getValueSaisie().get(5));
                 methodVisitor.visitLdcInsn(longVal);
                 methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "io/gatling/javaapi/core/OpenInjectionStep$Ramp", "during", "(J)Lio/gatling/javaapi/core/OpenInjectionStep;", false);
-                methodVisitor.visitInsn(Opcodes.AASTORE);
-                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "io/gatling/javaapi/core/ScenarioBuilder", "injectOpen", "([Lio/gatling/javaapi/core/OpenInjectionStep;)Lio/gatling/javaapi/core/PopulationBuilder;", false);
-                break;
+                 break;
 
 
-            case   Step_Load_Model:
+            case Step_Load_Model:
 
                 methodVisitor.visitInsn(Opcodes.ICONST_0);
                 Long longV = Long.valueOf(setupDTO.getValueSaisie().get(0));
@@ -176,13 +164,10 @@ public class GenerationServiceImpl implements GenerationService {
                 methodVisitor.visitInsn(Opcodes.DUP);
                 methodVisitor.visitIntInsn(Opcodes.BIPUSH, 6);
                 Long longValue9 = Long.valueOf(setupDTO.getValueSaisie().get(10));
-                methodVisitor.visitLdcInsn(longValue9);                methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "io/gatling/javaapi/core/CoreDsl", "nothingFor", "(J)Lio/gatling/javaapi/core/OpenInjectionStep;", false);
-                methodVisitor.visitInsn(Opcodes.AASTORE);
-                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "io/gatling/javaapi/core/ScenarioBuilder", "injectOpen", "([Lio/gatling/javaapi/core/OpenInjectionStep;)Lio/gatling/javaapi/core/PopulationBuilder;", false);
+                methodVisitor.visitLdcInsn(longValue9);
+                methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "io/gatling/javaapi/core/CoreDsl", "nothingFor", "(J)Lio/gatling/javaapi/core/OpenInjectionStep;", false);
                 break;
-            case SPIKE_LOAD_TEST:
-                // methodVisitor.visitInsn(Opcodes.ICONST_2);
-
+              case SPIKE_LOAD_TEST:
                 methodVisitor.visitInsn(Opcodes.ICONST_0);
                 Double doubleValue7 = Double.valueOf(setupDTO.getValueSaisie().get(0));
                 methodVisitor.visitLdcInsn(doubleValue7);
@@ -198,20 +183,43 @@ public class GenerationServiceImpl implements GenerationService {
                 Long longValue10 = Long.valueOf(setupDTO.getValueSaisie().get(3));
                 methodVisitor.visitLdcInsn(longValue10);
                 methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "io/gatling/javaapi/core/OpenInjectionStep$StressPeak", "during", "(J)Lio/gatling/javaapi/core/OpenInjectionStep;", false);
-                methodVisitor.visitInsn(Opcodes.AASTORE);
-                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "io/gatling/javaapi/core/ScenarioBuilder", "injectOpen", "([Lio/gatling/javaapi/core/OpenInjectionStep;)Lio/gatling/javaapi/core/PopulationBuilder;", false);
                 break;
             case CUSTOMIZED:
                 Set<TypeTest> customizedTypes = setupDTO.getCustomizedTypes();
                 for (TypeTest customizedType : customizedTypes) {
                     DefineFunctionWithTypeTestChoising(customizedType, methodVisitor, setupDTO);
                 }
+
                 break;
-
-
             default:
         }
+    }
+        public String URPpath(){
+            String directory = this.getProjectFolderPath() + "/results/";
+        String directory2=this.findLatestFolder(directory)+"/index.html";
+            return "file:///"+directory+directory2;
+        }
 
+
+    public static String findLatestFolder(String directoryPath) {
+        File directory = new File(directoryPath);
+
+        // List subdirectories in the directory
+        File[] subdirectories = directory.listFiles(File::isDirectory);
+
+        if (subdirectories == null || subdirectories.length == 0) {
+            return null; // No subdirectories found
+        }
+
+        // Sort subdirectories by last modified time in descending order
+        Arrays.sort(subdirectories, Comparator.comparingLong(File::lastModified).reversed());
+
+        // Return the name of the latest subdirectory
+        return subdirectories[0].getName();
+    }
+    public static String getProjectFolderPath() {
+        String projectPath = System.getProperty("user.dir");
+        return projectPath;
+    }
     }
 
-}
