@@ -1,6 +1,7 @@
 package com.machinestalk.services;
 
 import com.machinestalk.entities.Paths;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -19,4 +20,6 @@ public interface PathsService {
     void assignParamToPath(Paths paths);
     List<Paths> findByApplication_Id (Integer id );
     void assignScenarioToPath(Paths path);
-    }
+    Page<Paths> findByApplication_IdPage (Integer id , int offset , int pageSize );
+
+}

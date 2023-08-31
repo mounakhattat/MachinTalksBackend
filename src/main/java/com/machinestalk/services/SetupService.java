@@ -16,4 +16,6 @@ public interface SetupService {
     void delete(Integer id);
 
   void assignScenarioToSetup(Setup setup);
+    void assignScenarioToSetupAndPath(Setup setup);
+
 }

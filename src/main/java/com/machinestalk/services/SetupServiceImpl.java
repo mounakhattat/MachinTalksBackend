@@ -1,5 +1,6 @@
 package com.machinestalk.services;
 
+import com.machinestalk.entities.Paths;
 import com.machinestalk.entities.Scenario;
 import com.machinestalk.entities.Setup;
 import com.machinestalk.repositories.SetupRepository;
@@ -23,7 +24,8 @@ public class SetupServiceImpl implements SetupService {
     @Transactional
     @Override
     public Setup save(Setup setup) throws Exception {
-        assignScenarioToSetup(setup);
+        assignScenarioToSetupAndPath(setup);
+
         return setupRepository.save(setup);
     }
 
@@ -44,6 +46,19 @@ public class SetupServiceImpl implements SetupService {
     @Override
     public void assignScenarioToSetup(Setup setup) {
         List<Scenario> scenarios = setup.getScenarios().stream().map(sc -> {
+            sc.setSetup(setup);
+            return sc;
+        }).collect(Collectors.toList());
+        setup.setScenarios(scenarios);
+    }
+    @Override
+    public void assignScenarioToSetupAndPath(Setup setup) {
+        List<Scenario> scenarios = setup.getScenarios().stream().map(sc -> {
+            Paths path = sc.getPath();
+            if (path != null) {
+                sc.setPath(path);
+                path.getScenarios().add(sc);
+            }
             sc.setSetup(setup);
             return sc;
         }).collect(Collectors.toList());

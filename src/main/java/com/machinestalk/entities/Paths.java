@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -13,22 +14,22 @@ import java.util.List;
     @Data
 
     public class Paths implements Serializable{
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private Integer id;
-        private String name;
-        private String path;
-        @Enumerated(EnumType.STRING)
-        private RequestType requestType;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    private String name;
+    private String path;
+    @Enumerated(EnumType.STRING)
+    private RequestType requestType;
 
-        @ManyToOne
-       private Application application;
+    @ManyToOne
+    private Application application;
 
-        @OneToMany( mappedBy="pathsss", cascade = CascadeType.ALL, orphanRemoval = true)
-       private List<Parameters> parameters;
+    @OneToMany( mappedBy="pathsss", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Parameters> parameters;
     @JsonIgnore
     @OneToMany(mappedBy = "path")
+    private List<Scenario> scenarios=  new ArrayList<>();
 
-    private List<Scenario> scenarios;
 
 }

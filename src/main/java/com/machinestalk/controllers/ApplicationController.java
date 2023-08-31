@@ -20,12 +20,7 @@ import java.util.List;
 public class ApplicationController {
     @Autowired
     ApplicationServiceImpl servicesss;
-    @Autowired
-    ClassGenerated classGenerated;
-    @Autowired
-    GenerationServiceImpl generationService;
-@Autowired
-    GenerateRapport generateRapport;
+
 
 
     //http://localhost:8085/TestApp/display-TestApp
@@ -56,19 +51,6 @@ public class ApplicationController {
         servicesss.delete(idTestApp);
     }
 
-   @PostMapping("/Genaration")
-    public void Generation(@RequestBody SetupDTO setup) {
-       try {
-           classGenerated.testing(setup);
-        } catch (Throwable t) {
-            t.printStackTrace();
-        }
-    }
-    @GetMapping("/rapport")
-        public String Rapport (){
-        generateRapport.Rapport();
-     String obj= generationService.URPpath();
-        return obj;
-    }
+
 
 }

@@ -15,7 +15,7 @@ public class SetupDTO {
     private String cle;
     private String name;
     private String tokenValue;
-    private List<ScenarioDTO> scenarios;
+    private List<Scenario> scenarios;
     private List<Integer> valueSaisie ;
     private List<Integer> customizedValue ;
     private Set<TypeTest> customizedTypes ;

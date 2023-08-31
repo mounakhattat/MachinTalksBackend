@@ -4,6 +4,7 @@ import com.machinestalk.entities.Paths;
 import com.machinestalk.services.ParametersService;
 import com.machinestalk.services.PathsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -56,6 +57,11 @@ public class PathController {
     @GetMapping("/ListPathByApplicationId/{id}")
     public List<Paths> findByApplication_Id(@PathVariable Integer id){
         return pathsService.findByApplication_Id(id);
+
+    }
+    @GetMapping("/ListPathByApplicationIdPageable/{id}/{offset}/{pagesize}")
+    public Page<Paths> findByApplication_Id(@PathVariable Integer id , @PathVariable Integer offset, @PathVariable Integer pagesize ){
+        return pathsService.findByApplication_IdPage(id , offset , pagesize);
 
     }
 

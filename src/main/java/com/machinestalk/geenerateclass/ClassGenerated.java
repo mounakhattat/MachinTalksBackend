@@ -32,7 +32,7 @@ public class ClassGenerated {
 
     public  void testing(SetupDTO setupDTO) throws Exception {
         //Request Variable
-        ScenarioDTO scenario = setupDTO.getScenarios().get(0);
+        Scenario scenario = setupDTO.getScenarios().get(0);
         com.machinestalk.entities.Paths path = scenario.getPath();
         Application app = path.getApplication();
         ClassWriter classWriter = new ClassWriter(ClassWriter.COMPUTE_FRAMES);

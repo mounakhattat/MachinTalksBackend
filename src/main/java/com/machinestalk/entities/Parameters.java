@@ -16,6 +16,8 @@ public class Parameters implements Serializable {
     private Integer id;
     @Column(unique = true)
     private String clee;
+    @Transient
+    private String value;
     @Enumerated(EnumType.STRING)
     private ParamType paramType;
     @JsonIgnore

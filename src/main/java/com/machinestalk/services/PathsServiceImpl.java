@@ -7,6 +7,9 @@ import com.machinestalk.repositories.ApplicationRepository;
 import com.machinestalk.repositories.PathsRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -80,6 +83,10 @@ public void assignParamToPath(Paths paths) {
 @Override
 public  List<Paths> findByApplication_Id (Integer id ){
     return  pathsRepository.findByApplication_Id(id);
+    }
+    @Override
+    public Page<Paths> findByApplication_IdPage(Integer id , int offset , int pagesize) {
+        return pathsRepository.findByApplication_Id(id, PageRequest.of(offset, pagesize)) ;
     }
 }
 
