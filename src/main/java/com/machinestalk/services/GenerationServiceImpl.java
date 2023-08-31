@@ -1,7 +1,6 @@
 package com.machinestalk.services;
 
 import com.machinestalk.enumerations.TypeTest;
-import com.machinestalk.models.InformationTestType;
 import com.machinestalk.models.SetupDTO;
 import lombok.AllArgsConstructor;
 import org.objectweb.asm.MethodVisitor;
@@ -9,15 +8,9 @@ import org.objectweb.asm.Opcodes;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Set;
-
-import static com.machinestalk.enumerations.TypeTest.getValueByName;
 
 @Service
 @AllArgsConstructor

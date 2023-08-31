@@ -3,6 +3,7 @@ package com.machinestalk.controllers;
 import com.machinestalk.entities.Setup;
 import com.machinestalk.geenerateclass.ClassGenerated;
 import com.machinestalk.geenerateclass.GenerateRapport;
+import com.machinestalk.models.Directory;
 import com.machinestalk.models.SetupDTO;
 import com.machinestalk.services.GenerationServiceImpl;
 import com.machinestalk.services.SetupServiceImpl;
@@ -50,8 +51,9 @@ public class SetupController {
     }
 
     @PostMapping()
-    public void Generation(@RequestBody SetupDTO setupDto) {
+    public Directory Generation(@RequestBody SetupDTO setupDto) {
         Setup setupEntity = new Setup();
+        Directory directoryurl = new Directory();
         setupEntity.setCle(setupDto.getCle());
         setupEntity.setId(setupDto.getId());
         setupEntity.setName(setupDto.getName());
@@ -59,16 +61,17 @@ public class SetupController {
         try {
             setupService.save(setupEntity);
             classGenerated.testing(setupDto);
+
         } catch (Throwable t) {
             t.printStackTrace();
         }
+        generateRapport.Rapport();
+        String locationRapportPath= generationService.URPpath();
+        directoryurl.setName(locationRapportPath);
+        return directoryurl;
 
     }
-    @GetMapping("/rapport")
-    public String Rapport (){
-        generateRapport.Rapport();
-        String obj= generationService.URPpath();
-        return obj;
-    }
+
+
 
 }
