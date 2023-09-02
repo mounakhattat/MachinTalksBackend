@@ -189,7 +189,7 @@ public class GenerationServiceImpl implements GenerationService {
     }
         public String URPpath(){
             String directory = this.getProjectFolderPath() + "/results/";
-        String directory2=this.findLatestFolder(directory)+"/index.html";
+        String directory2=this.findLatestFolder(directory);
             return "file:///"+directory+directory2;
         }
 

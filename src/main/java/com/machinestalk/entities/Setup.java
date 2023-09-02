@@ -10,6 +10,7 @@ import java.util.List;
 
 @Entity
 @Data
+@ToString
 public class Setup implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

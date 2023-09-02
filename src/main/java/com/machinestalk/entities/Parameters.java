@@ -4,12 +4,14 @@ import com.machinestalk.enumerations.ParamType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 
 import java.io.Serializable;
 
 
 @Entity
 @Data
+@ToString
 public class Parameters implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -9,6 +9,7 @@ import java.util.List;
 
 @Entity
 @Data
+@ToString
 public class Application implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

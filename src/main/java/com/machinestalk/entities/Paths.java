@@ -12,7 +12,7 @@ import java.util.List;
 
 @Entity
     @Data
-
+@ToString
     public class Paths implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
