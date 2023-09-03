@@ -46,13 +46,6 @@ public class SetupController {
     public Setup findById(@PathVariable("id") Integer id) {
         return setupService.findById(id);
     }
-    //http://localhost:8089/TestApp/create-TestApp
-  /*  @PostMapping()
-    public Setup save(@RequestBody Setup setup) throws Exception {
-        return setupService.save(setup);
-
-    }*/
-
     @PutMapping()
     public Setup update( @RequestBody Setup setup) {
         return setupService.update(setup);
@@ -64,7 +57,7 @@ public class SetupController {
     }
 
     @PostMapping()
-    public Directory Generation(@RequestBody SetupDTO setupDto) {
+    public ResponseEntity<InputStreamResource> Generation(@RequestBody SetupDTO setupDto) throws IOException {
         Setup setupEntity = new Setup();
         Directory directoryurl = new Directory();
         setupEntity.setCle(setupDto.getCle());
@@ -81,54 +74,13 @@ public class SetupController {
         generateRapport.Rapport();
         String locationRapportPath= generationService.URPpath();
         directoryurl.setName(locationRapportPath);
-        return directoryurl;
+        System.out.println("NAME Directory Generated  ♣♣♣♣  "+directoryurl);
+        return   setupService.downloadRapport(directoryurl);
 
     }
 
-    @GetMapping("/rapport")
-    public ResponseEntity<InputStreamResource> downloadRapport(@RequestBody Directory directoryurl) throws IOException {
-        // Provide the path to the folder on your local file system
-        String folderPath = directoryurl.getName();
 
-        File folder = new File(folderPath);
 
-        // Check if the folder exists and is a directory
-        if (!folder.exists() || !folder.isDirectory()) {
-            return ResponseEntity.notFound().build();
-        }
-
-        // Create a ZIP archive of the folder's contents
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        ZipOutputStream zipOutputStream = new ZipOutputStream(byteArrayOutputStream);
-
-        File[] files = folder.listFiles();
-        if (files != null) {
-            for (File file : files) {
-                if (file.isFile()) {
-                    try (FileInputStream fileInputStream = new FileInputStream(file)) {
-                        ZipEntry zipEntry = new ZipEntry(file.getName());
-                        zipOutputStream.putNextEntry(zipEntry);
-                        byte[] bytes = new byte[1024];
-                        int length;
-                        while ((length = fileInputStream.read(bytes)) >= 0) {
-                            zipOutputStream.write(bytes, 0, length);
-                        }
-                        zipOutputStream.closeEntry();
-                    }
-                }
-            }
-            zipOutputStream.close();
-        }
-
-        // Set headers for download
-        HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=Rapport.zip");
-        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-
-        return ResponseEntity.ok()
-                .headers(headers)
-                .body(new InputStreamResource(new ByteArrayInputStream(byteArrayOutputStream.toByteArray())));
-    }
 
 
 

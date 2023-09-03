@@ -28,7 +28,7 @@ public class ClassGenerated {
 
     public  void testing(SetupDTO setupDTO) throws Exception {
         System.out.println("====== setupDTO ====");
-        System.out.println(setupDTO);
+
         //Request Variable
         Scenario scenario = setupDTO.getScenarios().get(0);
         com.machinestalk.entities.Paths path = scenario.getPath();
@@ -79,7 +79,7 @@ public class ClassGenerated {
         constructorVisitor.visitInsn(Opcodes.ICONST_0); // Array index
 //**
         constructorVisitor.visitVarInsn(Opcodes.ALOAD, 2);
-        System.out.println("++++Capacity ++ ++" +"CAPACITY_TEST".equals(scenario.getTypeTest().toString()));
+
         if( "CAPACITY_TEST".equals(scenario.getTypeTest().toString()) || "SOAK_LOAD_TEST".equals(scenario.getTypeTest().toString())) {
             constructorVisitor.visitInsn(getValueByName(scenario.getTypeTest().toString()));
             constructorVisitor.visitTypeInsn(Opcodes.ANEWARRAY, "io/gatling/javaapi/core/ClosedInjectionStep");
@@ -101,7 +101,6 @@ public class ClassGenerated {
             constructorVisitor.visitInsn(Opcodes.ICONST_2);
             constructorVisitor.visitTypeInsn(Opcodes.ANEWARRAY, "io/gatling/javaapi/core/OpenInjectionStep");
             constructorVisitor.visitInsn(Opcodes.DUP);
-            System.out.println("I'm in Customise ^^ ");
             generationService.DefineFunctionWithTypeTestChoising(scenario.getTypeTest(),constructorVisitor,setupDTO);
             constructorVisitor.visitInsn(Opcodes.AASTORE);
             constructorVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "io/gatling/javaapi/core/ScenarioBuilder", "injectOpen", "([Lio/gatling/javaapi/core/OpenInjectionStep;)Lio/gatling/javaapi/core/PopulationBuilder;", false);
