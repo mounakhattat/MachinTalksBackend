@@ -1,0 +1,10 @@
+{
+  "simulation": "com.machinestalk.geenerateclass.MachinesTalk",
+  "simulationId": "machinestalk-20230903162008986",
+  "start": 1693758009891,
+  "description": "",
+  "scenarios": ["Hazem"],
+  "assertions": [
+
+  ]
+}

@@ -11,7 +11,7 @@ import java.util.List;
 
 
 @Entity
-    @Data
+@Data
 @ToString
     public class Paths implements Serializable{
     @Id

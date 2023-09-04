@@ -1,0 +1,10 @@
+{
+  "simulation": "com.machinestalk.geenerateclass.MachinesTalk",
+  "simulationId": "machinestalk-20230903153958274",
+  "start": 1693755603637,
+  "description": "",
+  "scenarios": ["Test Sync pb"],
+  "assertions": [
+
+  ]
+}
