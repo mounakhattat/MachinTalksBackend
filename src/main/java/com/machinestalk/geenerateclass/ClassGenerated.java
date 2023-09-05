@@ -155,10 +155,8 @@ public class ClassGenerated {
     public static Path getTargetDirectoryPath() {
         // Replace "target" with your actual target directory name
         String targetDirectoryName = "target";
-
         // Get the current working directory
         Path currentDirectory = Paths.get(System.getProperty("user.dir"));
-
         // Resolve the target directory path
         Path targetDirectoryPath = currentDirectory.resolve(targetDirectoryName);
 

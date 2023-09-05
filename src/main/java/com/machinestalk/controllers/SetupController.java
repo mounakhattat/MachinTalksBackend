@@ -67,16 +67,16 @@ public class SetupController {
         try {
             setupService.save(setupEntity);
             classGenerated.testing(setupDto);
-
+            generateRapport.Rapport();
+            String locationRapportPath= generationService.URPpath();
+            directoryurl.setName(locationRapportPath);
+            System.out.println("NAME Directory Generated  ♣♣♣♣  "+directoryurl);
+            return   setupService.downloadRapport(directoryurl);
         } catch (Throwable t) {
             t.printStackTrace();
         }
-        generateRapport.Rapport();
-        String locationRapportPath= generationService.URPpath();
-        directoryurl.setName(locationRapportPath);
-        System.out.println("NAME Directory Generated  ♣♣♣♣  "+directoryurl);
-        return   setupService.downloadRapport(directoryurl);
 
+        return null;
     }
 
 

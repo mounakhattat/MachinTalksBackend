@@ -20,7 +20,7 @@ public class GenerationServiceImpl implements GenerationService {
         switch (typeTest) {
             case CAPACITY_TEST:
                 methodVisitor.visitInsn(Opcodes.ICONST_0);
-                methodVisitor.visitIntInsn(Opcodes.BIPUSH, setupDTO.getValueSaisie().get(0));
+                methodVisitor.visitIntInsn(Opcodes.SIPUSH, setupDTO.getValueSaisie().get(0));
                 methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "io/gatling/javaapi/core/CoreDsl", "rampConcurrentUsers", "(I)Lio/gatling/javaapi/core/ClosedInjectionStep$Ramp;", false);
                 methodVisitor.visitLdcInsn(setupDTO.getValueSaisie().get(1));
                 methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "io/gatling/javaapi/core/ClosedInjectionStep$Ramp", "to", "(I)Lio/gatling/javaapi/core/ClosedInjectionStep$RampTo;", false);
@@ -31,7 +31,8 @@ public class GenerationServiceImpl implements GenerationService {
                 break;
             case SOAK_LOAD_TEST:
                 methodVisitor.visitInsn(Opcodes.ICONST_0);
-                methodVisitor.visitIntInsn(Opcodes.BIPUSH, setupDTO.getValueSaisie().get(0));
+                System.out.println("Value READ From the front ○○○"+setupDTO.getValueSaisie().get(0));
+                methodVisitor.visitIntInsn(Opcodes.SIPUSH, setupDTO.getValueSaisie().get(0));
                 methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "io/gatling/javaapi/core/CoreDsl", "constantConcurrentUsers", "(I)Lio/gatling/javaapi/core/ClosedInjectionStep$Constant;", false);
                 Long longValue1 = Long.valueOf(setupDTO.getValueSaisie().get(1));
                 methodVisitor.visitLdcInsn(longValue1);
@@ -90,7 +91,7 @@ public class GenerationServiceImpl implements GenerationService {
                 methodVisitor.visitInsn(Opcodes.AASTORE);
                 methodVisitor.visitInsn(Opcodes.DUP);
                 methodVisitor.visitInsn(Opcodes.ICONST_2);
-                methodVisitor.visitIntInsn(Opcodes.BIPUSH, setupDTO.getValueSaisie().get(2));
+                methodVisitor.visitIntInsn(Opcodes.SIPUSH, setupDTO.getValueSaisie().get(2));
                 methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "io/gatling/javaapi/core/CoreDsl", "rampUsers", "(I)Lio/gatling/javaapi/core/OpenInjectionStep$Ramp;", false);
                 Long longValu = Long.valueOf(setupDTO.getValueSaisie().get(3));
                 methodVisitor.visitLdcInsn(longValu);
@@ -98,7 +99,7 @@ public class GenerationServiceImpl implements GenerationService {
                 methodVisitor.visitInsn(Opcodes.AASTORE);
                 methodVisitor.visitInsn(Opcodes.DUP);
                 methodVisitor.visitInsn(Opcodes.ICONST_3);
-                methodVisitor.visitIntInsn(Opcodes.BIPUSH, setupDTO.getValueSaisie().get(4));
+                methodVisitor.visitIntInsn(Opcodes.SIPUSH, setupDTO.getValueSaisie().get(4));
                 methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "io/gatling/javaapi/core/CoreDsl", "rampUsers", "(I)Lio/gatling/javaapi/core/OpenInjectionStep$Ramp;", false);
                 Long longVal = Long.valueOf(setupDTO.getValueSaisie().get(5));
                 methodVisitor.visitLdcInsn(longVal);
@@ -155,7 +156,7 @@ public class GenerationServiceImpl implements GenerationService {
                 methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "io/gatling/javaapi/core/OpenInjectionStep$RampRate$During", "during", "(J)Lio/gatling/javaapi/core/OpenInjectionStep$RampRate$RampRateOpenInjectionStep;", false);
                 methodVisitor.visitInsn(Opcodes.AASTORE);
                 methodVisitor.visitInsn(Opcodes.DUP);
-                methodVisitor.visitIntInsn(Opcodes.BIPUSH, 6);
+                methodVisitor.visitIntInsn(Opcodes.SIPUSH, 6);
                 Long longValue9 = Long.valueOf(setupDTO.getValueSaisie().get(10));
                 methodVisitor.visitLdcInsn(longValue9);
                 methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "io/gatling/javaapi/core/CoreDsl", "nothingFor", "(J)Lio/gatling/javaapi/core/OpenInjectionStep;", false);
@@ -171,7 +172,7 @@ public class GenerationServiceImpl implements GenerationService {
                 methodVisitor.visitInsn(Opcodes.AASTORE);
                 methodVisitor.visitInsn(Opcodes.DUP);
                 methodVisitor.visitInsn(Opcodes.ICONST_1);
-                methodVisitor.visitIntInsn(Opcodes.BIPUSH, setupDTO.getValueSaisie().get(2));
+                methodVisitor.visitIntInsn(Opcodes.SIPUSH, setupDTO.getValueSaisie().get(2));
                 methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "io/gatling/javaapi/core/CoreDsl", "stressPeakUsers", "(I)Lio/gatling/javaapi/core/OpenInjectionStep$StressPeak;", false);
                 Long longValue10 = Long.valueOf(setupDTO.getValueSaisie().get(3));
                 methodVisitor.visitLdcInsn(longValue10);
