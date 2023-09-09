@@ -67,7 +67,8 @@ public class SetupController {
         try {
             setupService.save(setupEntity);
             classGenerated.testing(setupDto);
-            generateRapport.Rapport();
+            Thread.sleep(9000);
+            generateRapport.Rapport(setupDto);
             String locationRapportPath= generationService.URPpath();
             directoryurl.setName(locationRapportPath);
             System.out.println("NAME Directory Generated  ♣♣♣♣  "+directoryurl);

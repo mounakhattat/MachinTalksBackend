@@ -1,0 +1,10 @@
+{
+  "simulation": "com.machinestalk.geenerateclass.mortadha",
+  "simulationId": "mortadha-20230906220748841",
+  "start": 1694038069061,
+  "description": "",
+  "scenarios": ["mortadha"],
+  "assertions": [
+
+  ]
+}

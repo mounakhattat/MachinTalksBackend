@@ -1,0 +1,10 @@
+{
+  "simulation": "com.machinestalk.geenerateclass.amir",
+  "simulationId": "amir-20230906220637627",
+  "start": 1694037998392,
+  "description": "",
+  "scenarios": ["amir"],
+  "assertions": [
+
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "simulation": "com.machinestalk.geenerateclass.ListRepport",
+  "simulationId": "listrepport-20230907132206640",
+  "start": 1694092926973,
+  "description": "",
+  "scenarios": ["ListRepport"],
+  "assertions": [
+
+  ]
+}

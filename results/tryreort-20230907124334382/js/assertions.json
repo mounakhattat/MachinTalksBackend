@@ -1,0 +1,10 @@
+{
+  "simulation": "com.machinestalk.geenerateclass.tryReort",
+  "simulationId": "tryreort-20230907124334382",
+  "start": 1694090614975,
+  "description": "",
+  "scenarios": ["tryReort"],
+  "assertions": [
+
+  ]
+}

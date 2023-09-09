@@ -1,0 +1,10 @@
+{
+  "simulation": "com.machinestalk.geenerateclass.HightTest",
+  "simulationId": "highttest-20230907120919000",
+  "start": 1694088559237,
+  "description": "",
+  "scenarios": ["HightTest"],
+  "assertions": [
+
+  ]
+}
